@@ -64,7 +64,9 @@ module System.Posix.Signals (
   -- * Sending signals
   raiseSignal,
   signalProcess,
+#if defined(HAVE_KILLPG)
   signalProcessGroup,
+#endif
 
 #ifdef __GLASGOW_HASKELL__
   -- * Handling signals
@@ -288,12 +290,14 @@ foreign import ccall unsafe "kill"
 
 -- | @signalProcessGroup int pgid@ calls @kill@ to signal
 --  all processes in group @pgid@ with interrupt signal @int@.
+#if defined(HAVE_KILLPG)
 signalProcessGroup :: Signal -> ProcessGroupID -> IO ()
 signalProcessGroup sig pgid
   = throwErrnoIfMinus1_ "signalProcessGroup" (c_killpg pgid sig)
 
 foreign import ccall unsafe "killpg"
   c_killpg :: CPid -> CInt -> IO CInt
+#endif
 
 -- | @raiseSignal int@ calls @kill@ to signal the current process
 --   with interrupt signal @int@.

@@ -40,7 +40,11 @@ int __hsunix_mknod(const char *pathname, mode_t mode, dev_t dev)
 // getpwent is a macro on some platforms, so we need a wrapper:
 struct passwd *__hsunix_getpwent(void)
 {
+#ifndef INTERACTIVE_EDITION
     return getpwent();
+#else
+    return NULL;
+#endif
 }
 #endif
 
@@ -49,7 +53,11 @@ struct passwd *__hsunix_getpwent(void)
 int __hsunix_getpwnam_r(const char *name, struct passwd *pw, char *buffer,
                         size_t buflen, struct passwd **result)
 {
+#ifndef INTERACTIVE_EDITION
     return getpwnam_r(name, pw, buffer, buflen, result);
+#else
+    return 0;
+#endif
 }
 #endif
 
@@ -58,7 +66,11 @@ int __hsunix_getpwnam_r(const char *name, struct passwd *pw, char *buffer,
 int __hsunix_getpwuid_r(uid_t uid, struct passwd *pw, char *buffer,
                         size_t buflen, struct passwd **result)
 {
+#ifndef INTERACTIVE_EDITION
     return getpwuid_r(uid, pw, buffer, buflen, result);
+#else
+    return 0;
+#endif
 }
 #endif
 

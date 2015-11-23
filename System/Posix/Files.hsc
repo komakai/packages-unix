@@ -64,7 +64,9 @@ module System.Posix.Files (
     isDirectory, isSymbolicLink, isSocket,
 
     -- * Creation
+#if defined(HAVE_MKFIFO)
     createNamedPipe,
+#endif
     createDevice,
 
     -- * Hard links
@@ -197,10 +199,12 @@ foreign import ccall unsafe "__hsunix_lstat"
 -- have permission to create the pipe.
 --
 -- Note: calls @mkfifo@.
+#if defined(HAVE_MKFIFO)
 createNamedPipe :: FilePath -> FileMode -> IO ()
 createNamedPipe name mode = do
   withFilePath name $ \s ->
     throwErrnoPathIfMinus1_ "createNamedPipe" name (c_mkfifo s mode)
+#endif
 
 -- | @createDevice path mode dev@ creates either a regular or a special file
 -- depending on the value of @mode@ (and @dev@).  @mode@ will normally be either
