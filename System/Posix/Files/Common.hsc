@@ -83,12 +83,21 @@ module System.Posix.Files.Common (
 import System.Posix.Types
 import System.IO.Unsafe
 import Data.Bits
-#if defined(HAVE_STRUCT_STAT_ST_CTIM) || \
+#if defined(HAVE_STRUCT_STAT_ST_ATIM) || \
     defined(HAVE_STRUCT_STAT_ST_MTIM) || \
-    defined(HAVE_STRUCT_STAT_ST_ATIM) || \
+    defined(HAVE_STRUCT_STAT_ST_CTIM) || \
     defined(HAVE_STRUCT_STAT_ST_ATIMESPEC) || \
     defined(HAVE_STRUCT_STAT_ST_MTIMESPEC) || \
-    defined(HAVE_STRUCT_STAT_ST_CTIMESPEC)
+    defined(HAVE_STRUCT_STAT_ST_CTIMESPEC) || \
+    defined(HAVE_STRUCT_STAT_ST_ATIMENSEC) || \
+    defined(HAVE_STRUCT_STAT_ST_MTIMENSEC) || \
+    defined(HAVE_STRUCT_STAT_ST_CTIMENSEC) || \
+    defined(HAVE_STRUCT_STAT_ST_ATIME_N) || \
+    defined(HAVE_STRUCT_STAT_ST_MTIME_N) || \
+    defined(HAVE_STRUCT_STAT_ST_CTIME_N) || \
+    defined(HAVE_STRUCT_STAT_ST_UATIME) || \
+    defined(HAVE_STRUCT_STAT_ST_UMTIME) || \
+    defined(HAVE_STRUCT_STAT_ST_UCTIME)
 import Data.Int
 import Data.Ratio
 #endif

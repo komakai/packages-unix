@@ -75,6 +75,7 @@
 #include <dirent.h>
 #endif
 
+#ifndef INTERACTIVE_EDITION
 #if defined(HAVE_BSD_LIBUTIL_H)
 #include <bsd/libutil.h>
 #elif defined(HAVE_LIBUTIL_H)
@@ -82,6 +83,7 @@
 #endif
 #ifdef HAVE_PTY_H
 #include <pty.h>
+#endif
 #endif
 #ifdef HAVE_UTMP_H
 #include <utmp.h>

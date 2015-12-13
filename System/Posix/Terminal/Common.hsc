@@ -17,6 +17,7 @@
 -----------------------------------------------------------------------------
 
 module System.Posix.Terminal.Common (
+#ifndef INTERACTIVE_EDITION
   -- * Terminal support
 
   -- ** Terminal attributes
@@ -63,8 +64,9 @@ module System.Posix.Terminal.Common (
 
   -- ** Testing a file descriptor
   queryTerminal,
+#endif /* INTERACTIVE_EDITION */
   ) where
-
+#ifndef INTERACTIVE_EDITION
 #include "HsUnix.h"
 
 import Data.Bits
@@ -693,3 +695,5 @@ withNewTermios termios action = do
     _ <- action p1
     return ()
   return $ makeTerminalAttributes fp1
+#endif /* INTERACTIVE_EDITION */
+

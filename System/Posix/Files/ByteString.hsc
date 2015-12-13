@@ -64,7 +64,9 @@ module System.Posix.Files.ByteString (
     isDirectory, isSymbolicLink, isSocket,
 
     -- * Creation
-    createNamedPipe,
+#if defined(HAVE_MKFIFO)
+    createNamedPipe, 
+#endif
     createDevice,
 
     -- * Hard links
@@ -196,6 +198,7 @@ getSymbolicLinkStatus path = do
 foreign import ccall unsafe "__hsunix_lstat"
   c_lstat :: CString -> Ptr CStat -> IO CInt
 
+#if defined(HAVE_MKFIFO)
 -- | @createNamedPipe fifo mode@
 -- creates a new named pipe, @fifo@, with permissions based on
 -- @mode@. May fail with 'throwErrnoPathIfMinus1_' if a file named @name@
@@ -207,6 +210,7 @@ createNamedPipe :: RawFilePath -> FileMode -> IO ()
 createNamedPipe name mode = do
   withFilePath name $ \s ->
     throwErrnoPathIfMinus1_ "createNamedPipe" name (c_mkfifo s mode)
+#endif
 
 -- | @createDevice path mode dev@ creates either a regular or a special file
 -- depending on the value of @mode@ (and @dev@).  @mode@ will normally be either

@@ -18,6 +18,7 @@
 -----------------------------------------------------------------------------
 
 module System.Posix.Terminal (
+#ifndef INTERACTIVE_EDITION
   -- * Terminal support
 
   -- ** Terminal attributes
@@ -69,7 +70,10 @@ module System.Posix.Terminal (
   -- ** Pseudoterminal operations
   openPseudoTerminal,
   getSlaveTerminalName
+#endif
   ) where
+
+#ifndef INTERACTIVE_EDITION
 
 #include "HsUnix.h"
 
@@ -185,4 +189,5 @@ c_unlockpt :: CInt -> IO CInt
 c_unlockpt _ = return (fromIntegral 0)
 #endif /* HAVE_PTSNAME */
 #endif /* !HAVE_OPENPTY */
+#endif /* INTERACTIVE_EDITION */
 

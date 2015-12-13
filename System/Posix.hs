@@ -26,9 +26,13 @@ module System.Posix (
   module System.Posix.Env,
   module System.Posix.Process,
   module System.Posix.Temp,
+#ifndef INTERACTIVE_EDITION
   module System.Posix.Terminal,
+#endif
   module System.Posix.Time,
+#ifndef INTERACTIVE_EDITION
   module System.Posix.User,
+#endif
   module System.Posix.Resource,
   module System.Posix.Semaphore,
   module System.Posix.SharedMem,
@@ -46,9 +50,13 @@ import System.Posix.Process
 import System.Posix.IO
 import System.Posix.Env
 import System.Posix.Temp
+#ifndef INTERACTIVE_EDITION
 import System.Posix.Terminal
+#endif
 import System.Posix.Time
+#ifndef INTERACTIVE_EDITION
 import System.Posix.User
+#endif
 import System.Posix.Resource
 import System.Posix.Semaphore
 import System.Posix.SharedMem
