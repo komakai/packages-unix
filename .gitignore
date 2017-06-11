@@ -1,4 +1,8 @@
 # Specific generated files
+
+Thumbs.db
+.DS_Store
+
 GNUmakefile
 autom4te.cache/
 config.log
@@ -17,3 +21,5 @@ tests/*.o
 tests/*.hi
 tests/*.normalised
 *~
+*.hc
+*.dyn_hc
