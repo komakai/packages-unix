@@ -65,7 +65,7 @@ import Foreign
 import System.Posix.Types
 import System.Posix.Internals
 
-#if !(HAVE_FSYNC && HAVE_FDATASYNC)
+#if !(HAVE_FSYNC && (HAVE_FDATASYNC && !defined(IOS_SIM) && !defined(IOS_DEVICE)))
 import System.IO.Error ( ioeSetLocation )
 import GHC.IO.Exception ( unsupportedOperation )
 #endif
@@ -250,9 +250,11 @@ fileSynchronise _ = ioError (ioeSetLocation unsupportedOperation
 -- provide @fdatasync(2)@ (use @#if HAVE_FDATASYNC@ CPP guard to
 -- detect availability).
 --
+-- NOTE: due to a bug in autotools iOS builds incorrectly define HAVE_FDATASYNC
+--
 -- /Since: 2.7.1.0/
 fileSynchroniseDataOnly :: Fd -> IO ()
-#if HAVE_FDATASYNC
+#if HAVE_FDATASYNC && !defined(IOS_SIM) && !defined(IOS_DEVICE)
 fileSynchroniseDataOnly fd = do
   throwErrnoIfMinus1_ "fileSynchroniseDataOnly" (c_fdatasync fd)
 
